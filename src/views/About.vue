@@ -1,5 +1,16 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <DebugStoreState/>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import DebugStoreState from '@/components/debug/DebugStoreState';
+
+export default defineComponent({
+  components: {
+    DebugStoreState,
+  },
+});
+</script>
