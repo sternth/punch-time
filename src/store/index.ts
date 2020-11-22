@@ -1,15 +1,14 @@
 import { createStore } from 'vuex';
 import { IRootStore } from '@/common/interfaces/IRootStore';
-import { IUserStore } from '@/common/interfaces/IUserStore';
-import { ITaskStore } from '@/common/interfaces/ITaskStore';
 import { UserStorage } from '@/store/user-storage';
 import { TaskStorage } from '@/store/task-storage';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const rootState: any = {};
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
 export default createStore<IRootStore>({
-  state: {
-    user: UserStorage.state as IUserStore,
-    task: TaskStorage.state as ITaskStore,
-  },
+  state: rootState,
   mutations: {
   },
   actions: {

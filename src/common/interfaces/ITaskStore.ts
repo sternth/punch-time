@@ -1,5 +1,5 @@
-import { Task } from '@/common/types/Task';
+import { Task } from '@/common/classes/Task';
 
 export interface ITaskStore {
-  list: Task[],
+  list: Task[];
 }

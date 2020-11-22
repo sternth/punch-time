@@ -1,16 +1,21 @@
 <template>
-  <div class="about">
-    <DebugStoreState/>
+  <div class="task">
+    <TaskList/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DebugStoreState from '@/components/debug/DebugStoreState.vue';
+import TaskList from '@/components/task/TaskList.vue';
 
 export default defineComponent({
+  name: 'Task',
   components: {
-    DebugStoreState,
+    TaskList,
   },
 });
 </script>
+
+<style scoped>
+
+</style>
