@@ -1,38 +1,35 @@
+import dayjs from 'dayjs';
 import { TaskData } from '@/common/types/TaskData';
 import { getDate0 } from '@/common/utils/date-operations/getDate0';
-import dayjs from 'dayjs';
 import { convertClockTimeInMs } from '@/common/utils/date-operations/convertClockTimeInMs';
+import { ITaskDocument } from '@/common/interfaces/ITaskDocument';
 
-export class Task implements TaskData {
-  private static counter = 0;
-
-  public readonly id: string;
-  private origin!: TaskData;
+export class Task implements ITaskDocument {
+  public _id: string; // id from mongodb
   public start!: number;
   public end!: number;
   public text!: string;
   public type!: string;
 
-  constructor (data: TaskData) {
-    this.id = 'id_' + Task.createId();
-    this.copy(data);
-    this.save();
-  }
-
-  private static createId (): string {
-    const zero = '0';
-    const number = (Task.counter++).toString();
-    const length = Math.max(0, 8 - number.length);
-    return zero.repeat(length) + number;
+  constructor (document: ITaskDocument) {
+    this._id = document._id;
+    this.copy(document);
   }
 
   public copy (data: TaskData): Task {
-    Object.assign(this, data);
+    this.start = data.start;
+    this.end = data.end;
+    this.text = data.text;
+    this.type = data.type;
     return this;
   }
 
   public clone (): Task {
-    return new Task(this.getData());
+    return new Task(this);
+  }
+
+  public getId (): string {
+    return this._id;
   }
 
   public getData (): TaskData {
@@ -100,31 +97,4 @@ export class Task implements TaskData {
     this.setEnd(end0 + convertClockTimeInMs(end));
     return this;
   }
-
-  public async update (): Promise<Task> {
-    try {
-      const data = await post(this.getData());
-      this.copy(data).save();
-    } catch (err) {
-      this.copy(this.origin);
-      throw err;
-    }
-    return this;
-  }
-
-  private save (): void {
-    this.origin = this.getData();
-  }
-}
-
-function post (data: TaskData): Promise<TaskData> {
-  return new Promise<TaskData>((resolve, reject) => {
-    setTimeout(() => {
-      if (Math.random() < 0.8) {
-        resolve(data);
-      } else {
-        reject(new Error('NO_UPDATE'));
-      }
-    }, Math.random() * 500 + 500);
-  });
 }

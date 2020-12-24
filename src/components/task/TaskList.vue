@@ -13,7 +13,7 @@ import store from '@/store';
 import TaskListItem from '@/components/task/TaskListItem.vue';
 
 export default defineComponent({
-  name: 'TaskList',
+  name: 'AddTaskForm',
   components: {
     TaskListItem,
   },
