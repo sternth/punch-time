@@ -1,12 +1,9 @@
 import { shallowMount } from '@vue/test-utils';
-import HelloWorld from '@/components/HelloWorld.vue';
+import AppLogin from '@/components/AppLogin.vue';
 
 describe('HelloWorld.vue', () => {
   it('renders props.msg when passed', () => {
-    const msg = 'new message';
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg },
-    });
-    expect(wrapper.text()).toMatch(msg);
+    const wrapper = shallowMount(AppLogin, {});
+    expect(wrapper.text()).toMatch('Punch-Time Login');
   });
 });

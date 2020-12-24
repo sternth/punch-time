@@ -3,4 +3,6 @@ module.exports = {
   transform: {
     '^.+\\.vue$': 'vue-jest',
   },
+  coverageDirectory: 'docs/',
+  coverageReporters: ['json', 'text', 'html'],
 };

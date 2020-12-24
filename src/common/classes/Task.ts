@@ -3,16 +3,15 @@ import { getDate0 } from '@/common/utils/date-operations/getDate0';
 import dayjs from 'dayjs';
 import { convertClockTimeInMs } from '@/common/utils/date-operations/convertClockTimeInMs';
 
-export class Task {
+export class Task implements TaskData {
   private static counter = 0;
 
   public readonly id: string;
-
   private origin!: TaskData;
-  private start!: number;
-  private end!: number;
-  private text!: string;
-  private type!: string;
+  public start!: number;
+  public end!: number;
+  public text!: string;
+  public type!: string;
 
   constructor (data: TaskData) {
     this.id = 'id_' + Task.createId();
@@ -70,9 +69,15 @@ export class Task {
   }
 
   public changeDate (newDate: string): Task {
+    const newDateValue = dayjs(newDate).valueOf();
+
+    if (!newDateValue) {
+      throw new Error('Invalid Date: ' + newDate);
+    }
+
     const date0 = getDate0(this.start);
     const time0 = Math.abs(this.start - date0);
-    this.setStart(dayjs(newDate).valueOf() + time0);
+    this.setStart(newDateValue + time0);
     return this;
   }
 
@@ -84,6 +89,10 @@ export class Task {
   }
 
   public changeTime (newTime: string): Task {
+    if (!/^\d{4}-\d{4}$/.test(newTime)) {
+      throw new Error('Invalid Time: ' + newTime);
+    }
+
     const [start, end] = newTime.split('-');
     const start0 = getDate0(this.start);
     const end0 = getDate0(this.end);
