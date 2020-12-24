@@ -24,6 +24,7 @@ export const TaskStorage: Module<ITaskStore, IRootStore> = {
     removeTask (state: ITaskStore, removedTask: ITaskDocument): void {
       const { _id } = removedTask;
       const index = state.list.findIndex(val => val._id === _id);
+      console.log('remove:', _id, index);
       if (index !== -1) {
         state.list.splice(index, 1);
       }

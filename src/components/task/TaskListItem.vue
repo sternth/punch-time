@@ -31,6 +31,8 @@
              @focus="onFocus()"
              @blur="onBlur()">
     </label>
+    <br />
+    <button @click="remove">DELETE</button>
     <pre>
       status: {{ updater.status }}
     </pre>
@@ -39,6 +41,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import store from '@/store';
 
 enum STATUS {
   NONE = '',
@@ -124,6 +127,9 @@ export default defineComponent({
     isUpdating: function () {
       return this.updater.status === STATUS.ACTIVE;
     },
+    remove: function () {
+      store.dispatch('removeTask', this.task);
+    }
   },
 });
 </script>
