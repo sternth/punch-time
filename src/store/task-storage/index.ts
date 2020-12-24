@@ -43,7 +43,7 @@ export const TaskStorage: Module<ITaskStore, IRootStore> = {
     },
     editTask ({ commit }, task: Task): Promise<void> {
       return axios
-        .put<ITaskDocument>(`/api/tasks/${task.getId()}`)
+        .put<ITaskDocument>(`/api/tasks/${task.getId()}`, task.getData())
         .then(res => {
           commit('editTask', res.data);
         });

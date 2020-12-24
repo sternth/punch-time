@@ -1,40 +1,40 @@
 <template>
   <div>
-    <label v-bind:class="[updater.status]">
+    <label>
       <span>Date</span>
       <input v-model.lazy.trim="date"
-             :disabled="isUpdating()"
+             :disabled="updating"
              @focus="onFocus()"
              @blur="onBlur()">
     </label>
     <br />
-    <label v-bind:class="[updater.status]">
+    <label>
       <span>Time</span>
       <input v-model.lazy.trim="time"
-             :disabled="isUpdating()"
+             :disabled="updating"
              @focus="onFocus()"
              @blur="onBlur()">
     </label>
     <br />
-    <label v-bind:class="[updater.status]">
+    <label>
       <span>Text</span>
       <input v-model.lazy.trim="text"
-             :disabled="isUpdating()"
+             :disabled="updating"
              @focus="onFocus()"
              @blur="onBlur()">
     </label>
     <br />
-    <label v-bind:class="[updater.status]">
+    <label>
       <span>Type</span>
       <input v-model.lazy.trim="type"
-             :disabled="isUpdating()"
+             :disabled="updating"
              @focus="onFocus()"
              @blur="onBlur()">
     </label>
     <br />
     <button @click="remove">DELETE</button>
     <pre>
-      status: {{ updater.status }}
+      updating: {{ updating }}
     </pre>
   </div>
 </template>
@@ -56,11 +56,7 @@ export default defineComponent({
   data () {
     return {
       focus: false,
-      updater: {
-        timeout: 2500,
-        timeoutId: 0,
-        status: STATUS.NONE,
-      },
+      updating: false,
     };
   },
   computed: {
@@ -100,8 +96,6 @@ export default defineComponent({
   methods: {
     onFocus: function () {
       this.focus = true;
-      clearTimeout(this.updater.timeoutId);
-      this.updater.status = STATUS.NONE;
     },
     onBlur: function () {
       this.focus = false;
@@ -112,20 +106,10 @@ export default defineComponent({
       });
     },
     update: function () {
-      clearTimeout(this.updater.timeoutId);
-      this.updater.status = STATUS.ACTIVE;
-      this.task.update().then(() => {
-        this.updater.status = STATUS.SUCCESS;
-      }).catch(() => {
-        this.updater.status = STATUS.FAILED;
-      }).finally(() => {
-        this.updater.timeoutId = setTimeout(() => {
-          this.updater.status = STATUS.NONE;
-        }, this.updater.timeout) as unknown as number;
+      this.updating = true;
+      store.dispatch('editTask', this.task).finally(() => {
+        this.updating = false;
       });
-    },
-    isUpdating: function () {
-      return this.updater.status === STATUS.ACTIVE;
     },
     remove: function () {
       store.dispatch('removeTask', this.task);
@@ -135,16 +119,4 @@ export default defineComponent({
 </script>
 
 <style scoped>
-label {
-  background: white;
-}
-label.active {
-  background: lightskyblue;
-}
-label.failed {
-  background: lightcoral;
-}
-label.success {
-  background: #42b983;
-}
 </style>
