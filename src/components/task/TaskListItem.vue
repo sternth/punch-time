@@ -43,13 +43,6 @@
 import { defineComponent } from 'vue';
 import store from '@/store';
 
-enum STATUS {
-  NONE = '',
-  ACTIVE = 'active',
-  FAILED = 'failed',
-  SUCCESS = 'success'
-}
-
 export default defineComponent({
   name: 'TaskListItem',
   props: ['task'],

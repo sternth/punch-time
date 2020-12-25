@@ -9,7 +9,6 @@
 import { defineComponent } from 'vue';
 import { mapState } from 'vuex';
 import store from '@/store';
-import dayjs from 'dayjs';
 
 export default defineComponent({
   name: 'DebugStoreState',
