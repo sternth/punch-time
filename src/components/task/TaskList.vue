@@ -1,6 +1,6 @@
 <template>
   <div class="task-list">
-    <div v-for="task in task.list" v-bind:key="task.id">
+    <div v-for="task in sortedList" v-bind:key="task._id">
       <TaskListItem :task="task"/>
     </div>
   </div>
@@ -8,9 +8,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { mapState } from 'vuex';
 import store from '@/store';
 import TaskListItem from '@/components/task/TaskListItem.vue';
+import { Task } from '@/common/classes/Task';
 
 export default defineComponent({
   name: 'AddTaskForm',
@@ -18,9 +18,11 @@ export default defineComponent({
     TaskListItem,
   },
   computed: {
-    ...mapState([
-      'task',
-    ]),
+    sortedList: function (): Task[] {
+      return store.state.task.list
+        .map(task => task)
+        .sort((a, b) => a.start - b.start);
+    },
   },
   created () {
     store.dispatch('loadTasks');

@@ -13,7 +13,6 @@ export const TaskStorage: Module<ITaskStore, IRootStore> = {
   mutations: {
     addTask (state: ITaskStore, createdTask: ITaskDocument): void {
       state.list.push(new Task(createdTask));
-      state.list.sort((a, b) => a.start - b.start);
     },
     editTask (state: ITaskStore, editedTask: ITaskDocument): void {
       const { _id } = editedTask;
@@ -21,7 +20,6 @@ export const TaskStorage: Module<ITaskStore, IRootStore> = {
       if (task) {
         task.copy(editedTask);
       }
-      state.list.sort((a, b) => a.start - b.start);
     },
     removeTask (state: ITaskStore, removedTask: ITaskDocument): void {
       const { _id } = removedTask;
@@ -33,8 +31,7 @@ export const TaskStorage: Module<ITaskStore, IRootStore> = {
     },
     setTasks (state: ITaskStore, tasks: ITaskDocument[]): void {
       state.list = tasks
-        .map(task => new Task(task))
-        .sort((a, b) => a.start - b.start);
+        .map(task => new Task(task));
     },
   },
   actions: {
