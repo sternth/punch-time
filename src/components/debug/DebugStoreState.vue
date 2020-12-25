@@ -1,6 +1,5 @@
 <template>
   <div>
-    <pre>user: {{ user }}</pre>
     <pre>task: {{ task }}</pre>
   </div>
 </template>
@@ -14,7 +13,6 @@ export default defineComponent({
   name: 'DebugStoreState',
   computed: {
     ...mapState([
-      'user',
       'task',
     ]),
   },

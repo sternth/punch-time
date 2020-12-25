@@ -1,6 +1,5 @@
 import { createStore } from 'vuex';
 import { IRootStore } from '@/common/interfaces/IRootStore';
-import { UserStorage } from '@/store/user-storage';
 import { TaskStorage } from '@/store/task-storage';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -14,7 +13,6 @@ export default createStore<IRootStore>({
   actions: {
   },
   modules: {
-    user: UserStorage,
     task: TaskStorage,
   },
 });
