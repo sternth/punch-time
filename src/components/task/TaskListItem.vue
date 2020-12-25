@@ -1,41 +1,38 @@
 <template>
   <div>
-    <label>
-      <span>Date</span>
-      <input v-model.lazy.trim="date"
+    <label class="week-day">
+      <input disabled
+             :class="fullWeekDay"
+             :value="weekDay">
+    </label>
+    <label class="date">
+      <input maxlength="10"
+             v-model.lazy.trim="date"
              :disabled="updating"
              @focus="onFocus()"
              @blur="onBlur()">
     </label>
-    <br />
-    <label>
-      <span>Time</span>
-      <input v-model.lazy.trim="time"
+    <label class="time">
+      <input maxlength="9"
+             v-model.lazy.trim="time"
              :disabled="updating"
              @focus="onFocus()"
              @blur="onBlur()">
     </label>
-    <br />
-    <label>
-      <span>Text</span>
+    <label class="text">
       <input v-model.lazy.trim="text"
              :disabled="updating"
              @focus="onFocus()"
              @blur="onBlur()">
     </label>
-    <br />
-    <label>
-      <span>Type</span>
+    <label class="type">
       <input v-model.lazy.trim="type"
              :disabled="updating"
              @focus="onFocus()"
              @blur="onBlur()">
     </label>
-    <br />
-    <button @click="remove">DELETE</button>
-    <pre>
-      updating: {{ updating }}
-    </pre>
+    <button title="Remove this entry."
+            @click="remove">&#x2716;</button>
   </div>
 </template>
 
@@ -53,6 +50,12 @@ export default defineComponent({
     };
   },
   computed: {
+    weekDay: function (): string {
+      return this.task.getDate('ddd');
+    },
+    fullWeekDay: function (): string {
+      return this.task.getDate('dddd').toLowerCase();
+    },
     date: {
       get: function (): string {
         return this.task.getFormattedDate();
@@ -112,4 +115,57 @@ export default defineComponent({
 </script>
 
 <style scoped>
+label input, button {
+  font-family: monospace;
+  margin: 2px;
+}
+.week-day input {
+  font-weight: bold;
+  text-align: center;
+  width: 30px;
+}
+.week-day input.monday {
+  color: black;
+  background: orangered;
+}
+.week-day input.tuesday {
+  color: black;
+  background: orange;
+}
+.week-day input.wednesday {
+  color: black;
+  background: yellow;
+}
+.week-day input.thursday {
+  color: black;
+  background: limegreen;
+}
+.week-day input.friday {
+  color: black;
+  background: deepskyblue;
+}
+.week-day input.saturday {
+  color: white;
+  background: royalblue;
+}
+.week-day input.sunday {
+  color: white;
+  background: purple;
+}
+.date input {
+  text-align: center;
+  width: 80px;
+}
+.time input {
+  text-align: center;
+  width: 70px;
+}
+.text input {
+  text-align: left;
+  width: 400px;
+}
+.type input {
+  text-align: left;
+  width: 80px;
+}
 </style>

@@ -61,6 +61,10 @@ export class Task implements ITaskDocument {
     return this;
   }
 
+  public getDate (template: string): string {
+    return dayjs(this.start).format(template);
+  }
+
   public getFormattedDate (): string {
     return dayjs(this.start).format('YYYY-MM-DD');
   }

@@ -1,6 +1,7 @@
 <template>
   <div class="task">
     <TaskList/>
+    <br />
     <AddTaskForm/>
   </div>
 </template>
