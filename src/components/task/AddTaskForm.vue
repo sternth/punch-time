@@ -1,31 +1,28 @@
 <template>
   <div>
-    <label>
-      <span>Date</span>
+    <label class="date">
+      <span>Date: </span>
       <input v-model.trim="input.date"
              :disabled="updating">
     </label>
-    <br />
-    <label>
-      <span>Time</span>
+    <label class="time">
+      <span>&emsp;Time: </span>
       <input v-model.trim="input.time"
              :disabled="updating">
     </label>
-    <br />
-    <label>
-      <span>Text</span>
+    <label class="text">
+      <span>&emsp;Text: </span>
       <input v-model.trim="input.text"
              :disabled="updating">
     </label>
-    <br />
-    <label>
-      <span>Type</span>
+    <label class="type">
+      <span>&emsp;Type: </span>
       <input v-model.trim="input.type"
              :disabled="updating">
     </label>
-    <br />
+    <span>&emsp;</span>
     <button @click="addNewTask"
-            :disabled="!valid">Add new Task</button>
+            :disabled="!valid">&#x2795;</button>
   </div>
 </template>
 
@@ -75,4 +72,24 @@ export default defineComponent({
 </script>
 
 <style scoped>
+label input, button {
+  font-family: monospace;
+  margin: 2px;
+}
+.date input {
+  text-align: center;
+  width: 80px;
+}
+.time input {
+  text-align: center;
+  width: 70px;
+}
+.text input {
+  text-align: left;
+  width: 300px;
+}
+.type input {
+  text-align: left;
+  width: 80px;
+}
 </style>
