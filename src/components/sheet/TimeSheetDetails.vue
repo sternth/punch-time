@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <h3>{{ date }} {{ printAdd() }} ({{ tasks.length }})</h3>
+  <div class="container" :class="weekDay.toLowerCase()">
+    <h3>{{ weekDay }} - {{ date }} {{ printAdd() }} <span class="badge">{{ tasks.length }}</span></h3>
     <p>{{ range }} <span v-if="pause"><b>&emsp;Pause:</b> {{ pause }} minutes</span></p>
     <table>
       <thead>
@@ -35,6 +35,7 @@ import {
   CombinedTask,
   combineTasks,
 } from '@/components/sheet/utils/combineTasks';
+import dayjs from 'dayjs';
 
 const SPACE = ' ';
 
@@ -42,6 +43,9 @@ export default defineComponent({
   name: 'TimeSheetDetails',
   props: ['date', 'tasks'],
   computed: {
+    weekDay: function (): string {
+      return dayjs(this.date, 'DD.MM.YYYY').format('ddd').toUpperCase();
+    },
     range: function (): string {
       return calcRange(this.tasks);
     },
@@ -81,7 +85,44 @@ export default defineComponent({
 
 <style scoped>
 .container {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
   text-align: left;
+}
+.container.mon {
+  border-left: 10px solid orangered;
+  border-top: 2px solid orangered;
+}
+.container.tue {
+  border-left: 10px solid orange;
+  border-top: 2px solid orange;
+}
+.container.wed {
+  border-left: 10px solid yellow;
+  border-top: 2px solid yellow;
+}
+.container.thu {
+  border-left: 10px solid limegreen;
+  border-top: 2px solid limegreen;
+}
+.container.fri {
+  border-left: 10px solid deepskyblue;
+  border-top: 2px solid deepskyblue;
+}
+.container.sat {
+  border-left: 10px solid royalblue;
+  border-top: 2px solid royalblue;
+}
+.container.sun {
+  border-left: 10px solid purple;
+  border-top: 2px solid purple;
+}
+.badge {
+  background: #42b983;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 0 10px;
 }
 p {
   font-family: monospace;
