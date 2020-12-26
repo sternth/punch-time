@@ -1,6 +1,7 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
+    <router-link to="/sheet">Sheet</router-link> |
     <router-link to="/debug">About</router-link>
   </div>
   <router-view/>

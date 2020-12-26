@@ -15,6 +15,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Debug.vue'),
   },
   {
+    path: '/sheet',
+    name: 'Sheet',
+    component: () => import(/* webpackChunkName: "sheet" */ '../views/Sheet.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'PageNotFound',
     component: PageNotFound,

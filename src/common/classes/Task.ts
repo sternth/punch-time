@@ -76,9 +76,12 @@ export class Task implements ITaskDocument {
       throw new Error('Invalid Date: ' + newDate);
     }
 
-    const date0 = getDate0(this.start);
-    const time0 = Math.abs(this.start - date0);
-    this.setStart(newDateValue + time0);
+    const startTime = Math.abs(this.start - getDate0(this.start));
+    const endTime = Math.abs(this.end - getDate0(this.end));
+    console.log('startTime:', startTime / 1000 / 60);
+    console.log('  endTime:', endTime / 1000 / 60);
+    this.setStart(newDateValue + startTime);
+    this.setEnd(newDateValue + endTime);
     return this;
   }
 
