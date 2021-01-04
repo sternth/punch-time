@@ -1,23 +1,24 @@
 import { Task } from '@/common/classes/Task';
 import { getTaskData } from '../../../fixtures/tasks.fixtures';
 import { TaskData } from '@/common/types/TaskData';
+import { ITaskDocument } from '@/common/interfaces/ITaskDocument';
 
 describe('Task', function () {
   let task: Task;
   let anotherTask: Task;
 
   beforeEach(function () {
-    task = new Task(getTaskData(0));
-    anotherTask = new Task(getTaskData(1));
+    task = new Task(getTaskData(0) as ITaskDocument);
+    anotherTask = new Task(getTaskData(1) as ITaskDocument);
   });
 
   it('should have an id', function () {
-    expect(task.id).toEqual(expect.any(String));
+    expect(task._id).toEqual(expect.any(String));
   });
 
   it('should have an unique id', function () {
-    expect(anotherTask.id).toEqual(expect.any(String));
-    expect(task.id).not.toEqual(anotherTask.id);
+    expect(anotherTask._id).toEqual(expect.any(String));
+    expect(task._id).not.toEqual(anotherTask._id);
   });
 
   describe('copy()', function () {
@@ -56,12 +57,18 @@ describe('Task', function () {
       clone = task.clone();
     });
 
-    it('should return new task with new id', function () {
-      expect(clone.id).not.toBe(task.id);
+    it('should return new task with same id', function () {
+      expect(clone._id).toBe(task._id);
     });
 
     it('should return clone with equal task data', function () {
       expect(clone.getData()).toEqual(task.getData());
+    });
+  });
+
+  describe('getId()', () => {
+    it('should return the id', () => {
+      expect(task.getId()).toBe('5fe0ec5ad1f53a40c0d749a1');
     });
   });
 
@@ -106,6 +113,13 @@ describe('Task', function () {
 
     it('should return itself', function () {
       expect(task.setType('Analyse')).toBe(task);
+    });
+  });
+
+  describe('getDate()', () => {
+    it('should return formatted date', () => {
+      const tpl = 'YYYY-MM-DD HH:mm:ss';
+      expect(task.getDate(tpl)).toBe('2020-11-21 14:00:00');
     });
   });
 
