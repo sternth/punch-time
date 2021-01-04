@@ -3,21 +3,25 @@
     <label class="date">
       <span>Date: </span>
       <input v-model.trim="input.date"
+             v-on:keyup="addOnEnter"
              :disabled="updating">
     </label>
     <label class="time">
       <span>&emsp;Time: </span>
       <input v-model.trim="input.time"
+             v-on:keyup="addOnEnter"
              :disabled="updating">
     </label>
     <label class="text">
       <span>&emsp;Text: </span>
       <input v-model.trim="input.text"
+             v-on:keyup="addOnEnter"
              :disabled="updating">
     </label>
     <label class="type">
       <span>&emsp;Type: </span>
       <input v-model.trim="input.type"
+             v-on:keyup="addOnEnter"
              :disabled="updating">
     </label>
     <span>&emsp;</span>
@@ -31,6 +35,7 @@ import { defineComponent } from 'vue';
 import store from '@/store';
 import { getInitialDateValue, getInitialTimeValue } from '@/components/task/utils/helpers';
 import dayjs from 'dayjs';
+import { keys } from '@/components/task/utils/keys';
 
 export default defineComponent({
   name: 'AddTaskForm',
@@ -60,13 +65,21 @@ export default defineComponent({
       const start = dayjs(`${this.input.date} ${startTime}`);
       const end = dayjs(`${this.input.date} ${endTime}`);
 
+      this.updating = true;
       store.dispatch('addTask', {
         start: start.valueOf(),
         end: end.valueOf(),
         text: this.input.text,
         type: this.input.type,
+      }).finally(() => {
+        this.updating = false;
       });
     },
+    addOnEnter: function(event: KeyboardEvent) {
+      if (event.key === keys.Enter) {
+        this.addNewTask();
+      }
+    }
   },
 });
 </script>
