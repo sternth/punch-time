@@ -3,8 +3,9 @@ import dayjs from 'dayjs';
 
 export function calcRange (tasks: Task[]): string {
   const asc = (a: number, b: number) => a - b;
+  const desc = (a: number, b: number) => b - a;
   const start = tasks.map(task => task.start).sort(asc).shift();
-  const end = tasks.map(task => task.end).sort(asc).shift();
+  const end = tasks.map(task => task.end).sort(desc).shift();
   const startHour = dayjs(start).format('HHmm');
   const endHour = dayjs(end).format('HHmm');
 
